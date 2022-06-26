@@ -27,14 +27,17 @@ var fight = function(enemyNames) {
                     if (confirmSkip) {
                         window.alert(playerName + " has decided to skip this fight. Goodbye!");
             // subtract money from playerMoney for skipping
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney)
                 break;
             }
         }
 
+        
+        //generate random damage value based on player's attack power
+        var damage = randomNumber(playerAttack - 3, playerAttack);
         //remove enemy's health by subtracting the amount set in the playerAttack variable
-        enemyHealth = enemyHealth - playerAttack;
+        enemyHealth = Math.max(0, enemyHealth - playerAttack);
         console.log(
             playerName + " attacked " + enemyNames + ". " + enemyNames + " now has " + enemyHealth + " health remaining."
         );
@@ -52,8 +55,9 @@ var fight = function(enemyNames) {
         window.alert(enemyNames + " still has " + enemyHealth + " health left.");
     }
 
+    var damage = randomNumber(enemyAttack - 3, enemyAttack);
      //remove player's health by subtracting the amount set in the enemyAttack variable
-     playerHealth = playerHealth - enemyAttack;
+     playerHealth = Math.max(0, playerHealth - enemyAttack);
      console.log(
          enemyNames + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
      );
@@ -87,7 +91,7 @@ var fight = function(enemyNames) {
         //pick new enemy to fight based on the index of the enemyNames array
          var pickedEnemyName = enemyNames[i];
          // reset enemyHealth before starting new fight 
-        enemyHealth = 50;
+        enemyHealth = randomNumber(40, 60);
         // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
         fight(pickedEnemyName);
          // if player is still alive and we're not at the last enemy in the array
@@ -178,7 +182,13 @@ var fight = function(enemyNames) {
                 }
         };
         
-        
+    //function to generate a random numeric value
+        var randomNumber = function(min, max) {
+            var value = Math.floor(Math.random() * (21)) + 40;
+
+            return value;
+        };
 //start the game when the page loads
 startGame();
+
 
