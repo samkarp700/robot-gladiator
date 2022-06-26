@@ -59,7 +59,12 @@ var fight = function(enemy) {
     //remove enemy's health by subtracting the amount we set in the damage variable
     enemy.health = Math.max(0, enemy.health-damage);
     console.log(
-        playerInfo.name + " attacked " + enemy.name + " now has " + enemy.health + " health remaining."
+        playerInfo.name + 
+        " attacked " +
+         enemy.name + 
+         " now has " + 
+         enemy.health + 
+         " health remaining."
          );
 
         
@@ -81,7 +86,14 @@ var fight = function(enemy) {
      //remove player's health by subtracting the amount set in the enemy.attack variable
      playerInfo.health = Math.max(0, playerInfo.health - enemy.attack);
      console.log(
-         enemy.names + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
+         enemy.names +
+          " attacked " + 
+          playerInfo.name +
+           ". " + 
+           playerInfo.name +
+            " now has " + 
+            playerInfo.health + 
+            " health remaining."
      );
 
       //check player's health
@@ -149,15 +161,27 @@ var fight = function(enemy) {
 
     //function to end the entire game
     var endGame = function() {
+        
         window.alert("The game has now ended. Let's see how you did!");
-        // if player is still alive, player wins!
-        if (playerInfo.health > 0) {
-            window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");
-        } else {
-            window.alert("You've lost your robot in battle.");
-        }
+        // check localStorage for high score, if it's not there, use 0
+        var highScore = localStorage.getItem("highscore");
+            if (highScore === null) {
+                highScore = 0
+            }
+            // if player has more money than high score, player has new high score!
+            if (playerInfo.money > highScore) {
+                localStorage.setItem("highscore", playerInfo.money);
+                localStorage.setItem("name", playerInfo.name);
 
-        //ask player if they'd like to play again
+                alert(playerInfo.name + " now has the high score of " + playerInfo.money + "!");
+            }
+            else {
+                alert(playerInfo.name + " did not beat the high score of " + highScore + ". Maybe next time!");
+            }
+
+            //ask player if they'd like to play again
+        // if player is still alive, player wins!
+    
         var playAgainConfirm = window.confirm("Would you like to play again?");
         if (playAgainConfirm) {
             //restart the game
